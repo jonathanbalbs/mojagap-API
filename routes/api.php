@@ -16,24 +16,37 @@ use Illuminate\Support\Facades\Route;
 /**
  * User routes
  */
-Route::group(['mddleware' => 'auth:api'], function () {
-    Route::get('users', 'UsersController@index');
-    Route::get('users/{id}', 'UsersController@show');
-    Route::post('users', 'UsersController@store');
-    Route::put('users/{id}', 'UsersController@update');
-    //Route::delete('users/{id}', 'UsersController@destroy');
+Route::group([
+
+    'middleware' => 'company',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('company-login', 'AuthController@login');
+    Route::post('company-logout', 'AuthController@logout');
+    Route::post('company-refresh', 'AuthController@refresh');
+    Route::post('company-me', 'AuthController@me');
+
 });
 
 /**
  * Company routes
  */
-Route::group(['mddleware' => 'auth:company'], function () {
-    Route::get('companies', 'CompaniesController@index');
-    Route::get('companies/{id}', 'CompaniesController@show');
-    Route::post('companies', 'CompaniesController@store');
-    Route::put('companies/{id}', 'CompaniesController@update');
-    //Route::delete('companies/{id}', 'CompaniesController@destroy');
+Route::group([
+
+    'middleware' => 'company',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('company-login', 'AuthCompanyController@login');
+    Route::post('company-logout', 'AuthCompanyController@logout');
+    Route::post('company-refresh', 'AuthCompanyController@refresh');
+    Route::post('company-me', 'AuthCompanyController@me');
+
 });
+
 
 /**
  * Transaction routes
